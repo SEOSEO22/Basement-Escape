@@ -13,8 +13,8 @@ TagManager:
   - UI
   - Background
   - Player
-  - 
-  - 
+  - Enemy
+  - Ground
   - 
   - 
   - 
@@ -46,6 +46,15 @@ TagManager:
     locked: 0
   - name: Ground
     uniqueID: 1596075871
+    locked: 0
+  - name: Ornament
+    uniqueID: 3608134561
+    locked: 0
+  - name: Enemy
+    uniqueID: 1056319413
+    locked: 0
+  - name: Obstacle
+    uniqueID: 539333557
     locked: 0
   - name: Player
     uniqueID: 2079959433
