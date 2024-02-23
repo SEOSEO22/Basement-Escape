@@ -6,6 +6,8 @@ public class EnemyMovement : MonoBehaviour
 {
     [SerializeField] Transform target;
     [SerializeField] float moveSpeed = 5f;
+    [SerializeField] float damage = 100;
+    public int enemyScore = 150;
 
     Rigidbody2D rigid;
     Animator anim;
@@ -26,7 +28,7 @@ public class EnemyMovement : MonoBehaviour
     {
         float dir = target.position.x - transform.position.x;
 
-        if (Mathf.Abs(dir) < 8)
+        if (Mathf.Abs(dir) < 4)
         {
             Vector2 nextPos = new Vector2(Mathf.Sign(dir) * Mathf.Abs(moveSpeed), 0f);
             rigid.velocity = nextPos;
@@ -57,5 +59,13 @@ public class EnemyMovement : MonoBehaviour
     {
         moveSpeed = -moveSpeed;
         transform.localScale = new Vector3(Mathf.Sign(moveSpeed), 1, 1);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.name == "player")
+        {
+            FindObjectOfType<GameManager>().Damaged(damage/1000);
+        }
     }
 }
