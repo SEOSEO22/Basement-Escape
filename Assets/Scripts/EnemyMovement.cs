@@ -7,7 +7,7 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] Transform target;
     [SerializeField] float moveSpeed = 5f;
     [SerializeField] float damage = 100;
-    public int enemyScore = 150;
+    [SerializeField] int enemyScore = 150;
 
     Rigidbody2D rigid;
     Animator anim;
@@ -61,11 +61,16 @@ public class EnemyMovement : MonoBehaviour
         transform.localScale = new Vector3(Mathf.Sign(moveSpeed), 1, 1);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    // 공격했을 경우
+    public float EnemyAttack()
     {
-        if (collision.gameObject.name == "player")
-        {
-            FindObjectOfType<GameManager>().Damaged(damage/1000);
-        }
+        return damage;
+    }
+
+    // 죽었을 경우
+    public int EnemyDie()
+    {
+        Destroy(gameObject);
+        return enemyScore;
     }
 }

@@ -46,9 +46,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void GetScore(int score)
+    public void GetScore(int scoreNum)
     {
-        this.score += score;
+        this.score += scoreNum;
         scoreText.text = score.ToString("D6");
     }
 
@@ -58,6 +58,7 @@ public class GameManager : MonoBehaviour
         {
             life--;
             lifeText.text = life.ToString("D2");
+            healthGauge.fillAmount = 1;
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
         else

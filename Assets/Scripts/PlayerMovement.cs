@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] float walkingSpeed = 5f;
     [SerializeField] float jumpSpeed = 10f;
+    [SerializeField] BoxCollider2D bottomCollider;
 
     Vector2 moveInput;
     Rigidbody2D playerRigid;
@@ -42,7 +43,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnJump(InputValue value)
     {
-        if (value.isPressed)
+        if (value.isPressed && bottomCollider.IsTouchingLayers(LayerMask.GetMask("Ground")))
         {
             playerRigid.velocity += new Vector2(0f, jumpSpeed);
         }
@@ -75,12 +76,20 @@ public class PlayerMovement : MonoBehaviour
         anim.SetBool("IsAttack", false);
     }
 
+    // 플레이어가 적을 공격했을 경우
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (swordCollider.IsTouchingLayers(LayerMask.GetMask("Enemy")) && collision.tag == "Enemy")
         {
-            FindObjectOfType<GameManager>().GetScore(FindObjectOfType<EnemyMovement>().enemyScore);
-            Destroy(collision.gameObject);
+            FindObjectOfType<GameManager>().GetScore(collision.gameObject.GetComponent<EnemyMovement>().EnemyDie());
         }
+    }
+
+    // 플레이어가 공격 당했을 경우
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.name == "Ground") return;
+
+        FindObjectOfType<GameManager>().Damaged(collision.gameObject.GetComponent<EnemyMovement>().EnemyAttack() / 1000);
     }
 }
