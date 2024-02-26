@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -76,12 +77,18 @@ public class PlayerMovement : MonoBehaviour
         anim.SetBool("IsAttack", false);
     }
 
-    // 플레이어가 적을 공격했을 경우
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        // 플레이어가 적을 공격했을 경우
         if (swordCollider.IsTouchingLayers(LayerMask.GetMask("Enemy")) && collision.tag == "Enemy")
         {
             FindObjectOfType<GameManager>().GetScore(collision.gameObject.GetComponent<EnemyMovement>().EnemyDie());
+        }
+
+        // 다음 레벨로 가는 도착 지점에 도달했을 경우
+        if (collision.gameObject.tag == "NextLevel")
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }
 
