@@ -3,23 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using static UnityEditor.PlayerSettings;
 
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] float walkingSpeed = 5f;
     [SerializeField] float jumpSpeed = 10f;
     [SerializeField] BoxCollider2D bottomCollider;
+    [SerializeField] Color32 normalColor;
+    [SerializeField] Color32 damagedColor;
 
     Vector2 moveInput;
     Rigidbody2D playerRigid;
     BoxCollider2D swordCollider;
     Animator anim;
+    SpriteRenderer spriteRenderer;
 
     private void Start()
     {
         playerRigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         swordCollider = GetComponent<BoxCollider2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void Update()
@@ -27,6 +32,7 @@ public class PlayerMovement : MonoBehaviour
         Walk();
         FlipSprite();
         Attack();
+        PlayerMoveInCamera();
     }
 
     private void OnMove(InputValue value)
@@ -97,6 +103,30 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.gameObject.name == "Ground") return;
 
+        //PlayerDamaged();
         FindObjectOfType<GameManager>().Damaged(collision.gameObject.GetComponent<EnemyMovement>().EnemyAttack() / 1000);
+    }
+
+/*    void PlayerDamaged()
+    {
+        spriteRenderer.color = damagedColor;
+
+        Invoke("NormalLook", 1f);
+    }
+
+    void NormalLook()
+    {
+        spriteRenderer.color = normalColor;
+    }*/
+
+    // 플레이어의 움직임을 카메라 내로 제한 (레벨 2 한정)
+    void PlayerMoveInCamera()
+    {
+        Vector3 pos = Camera.main.WorldToViewportPoint(transform.position);
+        if (pos.x < 0f) pos.x = 0f;
+        if (pos.y < 0f) pos.y = 0f;
+        if (pos.x > 1f) pos.x = 1f;
+        if (pos.y > 1f) pos.y = 1f;
+        transform.position = Camera.main.ViewportToWorldPoint(pos);
     }
 }
