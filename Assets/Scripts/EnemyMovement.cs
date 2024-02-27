@@ -28,7 +28,7 @@ public class EnemyMovement : MonoBehaviour
     {
         float dir = target.position.x - transform.position.x;
 
-        if (Mathf.Abs(dir) < 4)
+        if (Mathf.Abs(dir) < 8)
         {
             Vector2 nextPos = new Vector2(Mathf.Sign(dir) * Mathf.Abs(moveSpeed), 0f);
             rigid.velocity = nextPos;
