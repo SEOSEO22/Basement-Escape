@@ -275,6 +275,12 @@ MonoBehaviour:
   walkingSpeed: 7
   jumpSpeed: 15
   bottomCollider: {fileID: 8052840876658811378}
+  normalColor:
+    serializedVersion: 2
+    rgba: 16777215
+  damagedColor:
+    serializedVersion: 2
+    rgba: 8816383
 --- !u!95 &1529529688682949403
 Animator:
   serializedVersion: 5
