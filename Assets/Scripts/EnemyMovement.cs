@@ -61,16 +61,22 @@ public class EnemyMovement : MonoBehaviour
         transform.localScale = new Vector3(Mathf.Sign(moveSpeed), 1, 1);
     }
 
-    // 공격했을 경우
-    public float EnemyAttack()
+    // 플레이어를 공격했을 경우
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        return damage;
+        if (collision.gameObject.name == "Player")
+        {
+            FindObjectOfType<GameManager>().Damaged(damage / 1000);
+        }
     }
 
     // 죽었을 경우
-    public int EnemyDie()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        Destroy(gameObject);
-        return enemyScore;
+        if (collision.gameObject.name == "Player")
+        {
+            Destroy(gameObject);
+            FindObjectOfType<GameManager>().GetScore(enemyScore);
+        }
     }
 }

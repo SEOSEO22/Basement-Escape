@@ -85,12 +85,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // 플레이어가 적을 공격했을 경우
-        if (swordCollider.IsTouchingLayers(LayerMask.GetMask("Enemy")) && collision.tag == "Enemy")
-        {
-            FindObjectOfType<GameManager>().GetScore(collision.gameObject.GetComponent<EnemyMovement>().EnemyDie());
-        }
-
         // 다음 레벨로 가는 도착 지점에 도달했을 경우
         if (collision.gameObject.tag == "NextLevel")
         {
@@ -98,28 +92,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    // 플레이어가 공격 당했을 경우
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.name == "Ground") return;
-
-        //PlayerDamaged();
-        FindObjectOfType<GameManager>().Damaged(collision.gameObject.GetComponent<EnemyMovement>().EnemyAttack() / 1000);
-    }
-
-/*    void PlayerDamaged()
-    {
-        spriteRenderer.color = damagedColor;
-
-        Invoke("NormalLook", 1f);
-    }
-
-    void NormalLook()
-    {
-        spriteRenderer.color = normalColor;
-    }*/
-
-    // 플레이어의 움직임을 카메라 내로 제한 (레벨 2 한정)
+    // 플레이어의 움직임을 카메라 내로 제한
     void PlayerMoveInCamera()
     {
         Vector3 pos = Camera.main.WorldToViewportPoint(transform.position);
