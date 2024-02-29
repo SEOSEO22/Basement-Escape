@@ -18,6 +18,12 @@ public class PlayerMovement : MonoBehaviour
     BoxCollider2D swordCollider;
     Animator anim;
     SpriteRenderer spriteRenderer;
+    bool isAttack = false;
+
+    [Header("Audio")]
+    AudioSource audio;
+    [SerializeField] AudioClip walk;
+    [SerializeField] AudioClip attack;
 
     private void Start()
     {
@@ -25,6 +31,7 @@ public class PlayerMovement : MonoBehaviour
         anim = GetComponent<Animator>();
         swordCollider = GetComponent<BoxCollider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        audio = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -46,6 +53,11 @@ public class PlayerMovement : MonoBehaviour
 
         bool isRunning = Mathf.Abs(playerRigid.velocity.x) > Mathf.Epsilon;
         anim.SetBool("IsRunning", isRunning);
+
+        if (isRunning && !audio.isPlaying && bottomCollider.IsTouchingLayers(LayerMask.GetMask("Ground")))
+        {
+            audio.PlayOneShot(walk);
+        }
     }
 
     private void OnJump(InputValue value)
@@ -68,8 +80,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void Attack()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !isAttack)
         {
+            isAttack = true;
+            audio.PlayOneShot(attack);
             anim.SetBool("IsAttack", true);
             swordCollider.enabled = true;
 
@@ -81,6 +95,7 @@ public class PlayerMovement : MonoBehaviour
     {
         swordCollider.enabled = false;
         anim.SetBool("IsAttack", false);
+        isAttack = false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
