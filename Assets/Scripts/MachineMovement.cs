@@ -12,6 +12,7 @@ public class MachineMovement : MonoBehaviour
 
     Rigidbody2D rigid;
     float moveDir = 1f;
+    bool isAlive = true;
 
     [Header("UI")]
     [SerializeField] GameObject Canvas;
@@ -28,6 +29,8 @@ public class MachineMovement : MonoBehaviour
 
     private void Update()
     {
+        if (!isAlive) return;
+
         rigid.velocity = new Vector2(0, moveDir * moveSpeed);
 
         if (transform.position.y >= 3)
@@ -60,6 +63,17 @@ public class MachineMovement : MonoBehaviour
         if (collision.gameObject.name == "Player")
         {
             hpBarTransform.gameObject.GetComponent<Image>().fillAmount -= 0.1f;
+            Die();
         }
+    }
+
+    void Die()
+    {
+        if (hpBarTransform.gameObject.GetComponent<Image>().fillAmount > 0) return;
+        
+        isAlive = false;
+        GetComponent<Animator>().SetTrigger("IsDie");
+        rigid.gravityScale = 2f;
+        Destroy(gameObject, 2f);
     }
 }
