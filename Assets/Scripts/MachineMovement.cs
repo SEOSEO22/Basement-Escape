@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class MachineMovement : MonoBehaviour
 {
+    [SerializeField] int score = 250;
     [SerializeField] float moveSpeed = 5f;
     [SerializeField] float launchSpeed = 2f;
     [SerializeField] GameObject bullet;
@@ -60,18 +61,29 @@ public class MachineMovement : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.name == "Player")
+        if (collision.gameObject.name == "Player" && collision.GetType().Equals(typeof(BoxCollider2D)))
         {
             hpBarTransform.gameObject.GetComponent<Image>().fillAmount -= 0.1f;
+            Damaged();
+        }
+    }
+
+    void Damaged()
+    {
+        if (hpBarTransform.gameObject.GetComponent<Image>().fillAmount > 0)
+        {
+            FindObjectOfType<GameManager>().GetScore(score);
+        }
+        else
+        {
             Die();
         }
     }
 
     void Die()
     {
-        if (hpBarTransform.gameObject.GetComponent<Image>().fillAmount > 0) return;
-        
         isAlive = false;
+        FindObjectOfType<GameManager>().GetScore(score * 2);
         GetComponent<Animator>().SetTrigger("IsDie");
         rigid.gravityScale = 2f;
         Destroy(gameObject, 2f);

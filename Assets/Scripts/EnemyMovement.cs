@@ -6,7 +6,7 @@ public class EnemyMovement : MonoBehaviour
 {
     [SerializeField] Transform target;
     [SerializeField] float moveSpeed = 5f;
-    [SerializeField] float damage = 100;
+    [SerializeField] float damage = 100f;
     [SerializeField] int enemyScore = 150;
 
     Rigidbody2D rigid;
@@ -73,7 +73,7 @@ public class EnemyMovement : MonoBehaviour
     // Á×¾úÀ» °æ¿ì
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.name == "Player")
+        if (collision.gameObject.name == "Player" && collision.GetType().Equals(typeof(BoxCollider2D)))
         {
             Destroy(gameObject);
             FindObjectOfType<GameManager>().GetScore(enemyScore);
