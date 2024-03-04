@@ -10,27 +10,26 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float walkingSpeed = 5f;
     [SerializeField] float jumpSpeed = 10f;
     [SerializeField] BoxCollider2D bottomCollider;
-    [SerializeField] Color32 normalColor;
-    [SerializeField] Color32 damagedColor;
+    [SerializeField] GameObject bullet;
+    [SerializeField] Transform gun;
 
     Vector2 moveInput;
     Rigidbody2D playerRigid;
     BoxCollider2D swordCollider;
     Animator anim;
-    SpriteRenderer spriteRenderer;
-    bool isAttack = false;
+    bool isSwordAttack = false;
+    bool isAttackTypeChange = false;
 
     [Header("Audio")]
     AudioSource audio;
     [SerializeField] AudioClip walk;
-    [SerializeField] AudioClip attack;
+    [SerializeField] AudioClip swordAttack;
 
     private void Start()
     {
         playerRigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         swordCollider = GetComponent<BoxCollider2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
         audio = GetComponent<AudioSource>();
     }
 
@@ -40,8 +39,29 @@ public class PlayerMovement : MonoBehaviour
         {
             Walk();
             FlipSprite();
-            Attack();
-            PlayerMoveInCamera();
+
+            if (SceneManager.GetActiveScene().buildIndex == 1)
+            {
+                SwordAttack();
+            }
+            else if (SceneManager.GetActiveScene().buildIndex == 2)
+            {
+                PlayerMoveInCamera();
+
+                if (Input.GetKeyDown(KeyCode.C))
+                {
+                    isAttackTypeChange = !isAttackTypeChange;
+                }
+
+                if (!isAttackTypeChange)
+                {
+                    SwordAttack();
+                }
+                else if(isAttackTypeChange)
+                {
+                    BulletAttack();
+                }
+            }
         }
     }
 
@@ -81,12 +101,12 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void Attack()
+    private void SwordAttack()
     {
-        if (Input.GetMouseButtonDown(0) && !isAttack)
+        if (Input.GetMouseButtonDown(0) && !isSwordAttack)
         {
-            isAttack = true;
-            audio.PlayOneShot(attack);
+            isSwordAttack = true;
+            audio.PlayOneShot(swordAttack);
             anim.SetBool("IsAttack", true);
             swordCollider.enabled = true;
 
@@ -94,11 +114,19 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private void BulletAttack()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Instantiate(bullet, gun.position, transform.rotation);
+        }
+    }
+
     private void StopAttack()
     {
         swordCollider.enabled = false;
         anim.SetBool("IsAttack", false);
-        isAttack = false;
+        isSwordAttack = false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

@@ -295,9 +295,21 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 256502343288650661, guid: e5beded641efd7e499834c3f4f72f09b, type: 3}
+      propertyPath: gun
+      value: 
+      objectReference: {fileID: 829983650}
+    - target: {fileID: 256502343288650661, guid: e5beded641efd7e499834c3f4f72f09b, type: 3}
       propertyPath: walk
       value: 
       objectReference: {fileID: 8300000, guid: c3f3efc1106f84643a38bd21f6826aaf, type: 3}
+    - target: {fileID: 256502343288650661, guid: e5beded641efd7e499834c3f4f72f09b, type: 3}
+      propertyPath: bullet
+      value: 
+      objectReference: {fileID: 5179026593706761753, guid: b45bf51f9add5fc41b65f77b2259294a, type: 3}
+    - target: {fileID: 256502343288650661, guid: e5beded641efd7e499834c3f4f72f09b, type: 3}
+      propertyPath: swordAttack
+      value: 
+      objectReference: {fileID: 8300000, guid: 13182107f288fdc47a11f9216c8f062b, type: 3}
     - target: {fileID: 256502343288650661, guid: e5beded641efd7e499834c3f4f72f09b, type: 3}
       propertyPath: walkingSpeed
       value: 10
@@ -360,7 +372,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 8438474725224441243, guid: e5beded641efd7e499834c3f4f72f09b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 829983650}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e5beded641efd7e499834c3f4f72f09b, type: 3}
 --- !u!1 &647284927
@@ -620,12 +635,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66b938c7387894c43b5b1038f09dceac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  swordScore: 250
   moveSpeed: 5
   launchSpeed: 1
   bullet: {fileID: 6833987568168013508, guid: 76450b9091ae7ed4e81e89fbc3575a47, type: 3}
   gun: {fileID: 1133197680}
   Canvas: {fileID: 312461333}
   HPBar: {fileID: 7907541174021516816, guid: 21e00907a8fc4f143928aea4322196bf, type: 3}
+  hpBarTransform: {fileID: 0}
 --- !u!95 &669095769
 Animator:
   serializedVersion: 5
@@ -709,6 +726,37 @@ MonoBehaviour:
   startPos: 25.6
   endPos: -25.6
   moveSpeed: 5
+--- !u!1 &829983649
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 829983650}
+  m_Layer: 7
+  m_Name: Gun
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &829983650
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 829983649}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2135899714}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1133197679
 GameObject:
   m_ObjectHideFlags: 0
@@ -5442,3 +5490,8 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &2135899714 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8438474725224441243, guid: e5beded641efd7e499834c3f4f72f09b, type: 3}
+  m_PrefabInstance: {fileID: 571857507}
+  m_PrefabAsset: {fileID: 0}

@@ -59,7 +59,7 @@ public class GameManager : MonoBehaviour
 
     public void Damaged(float damage)
     {
-        if ((healthGauge.fillAmount - damage) > 0)
+        if ((healthGauge.fillAmount - damage) > 0f)
         {
             healthGauge.fillAmount -= damage;
         }
