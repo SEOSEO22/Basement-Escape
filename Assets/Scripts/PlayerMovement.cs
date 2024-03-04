@@ -36,10 +36,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        Walk();
-        FlipSprite();
-        Attack();
-        PlayerMoveInCamera();
+        if (Time.timeScale != 0)
+        {
+            Walk();
+            FlipSprite();
+            Attack();
+            PlayerMoveInCamera();
+        }
     }
 
     private void OnMove(InputValue value)

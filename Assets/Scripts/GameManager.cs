@@ -4,16 +4,20 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using Unity.VisualScripting;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] GameObject exitCanvas;
     [SerializeField] Image healthGauge;
     [SerializeField] TextMeshProUGUI lifeText;
     [SerializeField] TextMeshProUGUI scoreText;
 
     int life = 3;
     int score = 0;
+    bool isClickedESCOnce = false;
 
+    // GameManager가 하나만 존재할 수 있도록 싱글톤 패턴 사용
     private void Awake()
     {
         int gameManagerLength = FindObjectsOfType<GameManager>().Length;
@@ -25,6 +29,25 @@ public class GameManager : MonoBehaviour
         else
         {
             DontDestroyOnLoad(gameObject);
+        }
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (!isClickedESCOnce)
+            {
+                exitCanvas.SetActive(true);
+                isClickedESCOnce = true;
+                Time.timeScale = 0;
+            }
+            else
+            {
+                exitCanvas.SetActive(false);
+                isClickedESCOnce = false;
+                Time.timeScale = 1f;
+            }
         }
     }
 
@@ -66,5 +89,11 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
             SceneManager.LoadScene(0);
         }
+    }
+
+    public void ExitGameOnPlaying()
+    {
+        Destroy(gameObject);
+        SceneManager.LoadScene(0);
     }
 }
