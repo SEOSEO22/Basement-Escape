@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class PlayerBullet : MonoBehaviour
 {
-    [SerializeField] int enemyScore = 350;
+    [SerializeField] int enemyScore = 200;
     [SerializeField] float bulletSpeed = 20f;
     Image enemyHPBar;
     Rigidbody2D bulletRigid;
@@ -14,7 +14,7 @@ public class PlayerBullet : MonoBehaviour
 
     private void Start()
     {
-        Destroy(gameObject, 5f);
+        Destroy(gameObject, 3f);
         bulletRigid = GetComponent<Rigidbody2D>();
         playerMovement = FindObjectOfType<PlayerMovement>();
         xSpeed = playerMovement.transform.localScale.x * bulletSpeed;

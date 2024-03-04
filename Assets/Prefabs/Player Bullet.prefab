@@ -171,6 +171,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498822a2bf38cef4b9fee523ce2b70de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyScore: 350
+  enemyScore: 200
   bulletSpeed: 20
-  torqueSize: 1

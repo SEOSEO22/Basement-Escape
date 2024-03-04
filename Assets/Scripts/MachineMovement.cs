@@ -5,11 +5,12 @@ using UnityEngine.UI;
 
 public class MachineMovement : MonoBehaviour
 {
-    [SerializeField] int swordScore = 250;
+    [SerializeField] int swordScore = 350;
     [SerializeField] float moveSpeed = 5f;
     [SerializeField] float launchSpeed = 2f;
     [SerializeField] GameObject bullet;
     [SerializeField] Transform gun;
+    [SerializeField] GameObject endGame;
 
     Rigidbody2D rigid;
     float moveDir = 1f;
@@ -87,5 +88,6 @@ public class MachineMovement : MonoBehaviour
         GetComponent<Animator>().SetTrigger("IsDie");
         rigid.gravityScale = 2f;
         Destroy(gameObject, 2f);
+        endGame.SetActive(true);
     }
 }

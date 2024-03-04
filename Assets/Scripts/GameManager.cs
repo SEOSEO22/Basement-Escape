@@ -96,4 +96,14 @@ public class GameManager : MonoBehaviour
         Destroy(gameObject);
         SceneManager.LoadScene(0);
     }
+
+    public int GetLifeInt()
+    {
+        return life;
+    }
+
+    public int GetScoreInt()
+    {
+        return score;
+    }
 }

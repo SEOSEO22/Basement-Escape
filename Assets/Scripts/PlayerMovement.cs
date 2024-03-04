@@ -18,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
     BoxCollider2D swordCollider;
     Animator anim;
     bool isSwordAttack = false;
+    bool isBulletAttack = false;
     bool isAttackTypeChange = false;
 
     [Header("Audio")]
@@ -116,19 +117,27 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void BulletAttack()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            Instantiate(bullet, gun.position, transform.rotation);
-        }
-    }
-
     private void StopAttack()
     {
         swordCollider.enabled = false;
         anim.SetBool("IsAttack", false);
         isSwordAttack = false;
+    }
+
+    private void BulletAttack()
+    {
+        if (Input.GetMouseButtonDown(0) && !isBulletAttack)
+        {
+            isBulletAttack = true;
+            Instantiate(bullet, gun.position, transform.rotation);
+
+            Invoke("StopBulletAttack", 0.5f);
+        }
+    }
+
+    private void StopBulletAttack()
+    {
+        isBulletAttack = false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
