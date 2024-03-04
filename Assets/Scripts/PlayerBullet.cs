@@ -15,10 +15,14 @@ public class PlayerBullet : MonoBehaviour
     private void Start()
     {
         Destroy(gameObject, 5f);
-        enemyHPBar = FindObjectOfType<MachineMovement>().hpBarTransform.gameObject.GetComponent<Image>();
         bulletRigid = GetComponent<Rigidbody2D>();
         playerMovement = FindObjectOfType<PlayerMovement>();
         xSpeed = playerMovement.transform.localScale.x * bulletSpeed;
+
+        if (GameObject.Find("Enemy"))
+        {
+            enemyHPBar = FindObjectOfType<MachineMovement>().hpBarTransform.gameObject.GetComponent<Image>();
+        }
     }
 
     private void Update()

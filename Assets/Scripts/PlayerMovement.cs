@@ -40,10 +40,12 @@ public class PlayerMovement : MonoBehaviour
             Walk();
             FlipSprite();
 
+            // 레벨 1일 경우
             if (SceneManager.GetActiveScene().buildIndex == 1)
             {
                 SwordAttack();
             }
+            // 레벨 2일 경우
             else if (SceneManager.GetActiveScene().buildIndex == 2)
             {
                 PlayerMoveInCamera();

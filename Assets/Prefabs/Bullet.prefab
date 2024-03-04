@@ -162,3 +162,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 8438474725224441243, guid: e5beded641efd7e499834c3f4f72f09b, type: 3}
+  damage: 200
