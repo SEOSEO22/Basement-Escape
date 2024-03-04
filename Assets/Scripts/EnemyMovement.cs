@@ -11,6 +11,7 @@ public class EnemyMovement : MonoBehaviour
 
     Rigidbody2D rigid;
     Animator anim;
+    bool isDamaged = false;
 
     private void Start()
     {
@@ -73,8 +74,10 @@ public class EnemyMovement : MonoBehaviour
     // Á×¾úÀ» °æ¿ì
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.name == "Player" && collision.GetType().Equals(typeof(BoxCollider2D)))
+        if (!isDamaged && collision.gameObject.name == "Player" && collision.GetType().Equals(typeof(BoxCollider2D)))
         {
+            isDamaged = true;
+
             Destroy(gameObject);
             FindObjectOfType<GameManager>().GetScore(enemyScore);
         }
