@@ -60,6 +60,6 @@ public class GameEnding : MonoBehaviour
 
     public void RestartGame()
     {
-        SceneManager.LoadScene(0);
+        FindObjectOfType<GameManager>().ExitGameOnPlaying();
     }
 }
