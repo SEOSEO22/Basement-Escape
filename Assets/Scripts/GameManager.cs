@@ -32,6 +32,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        lifeText.text = life.ToString("D2");
+        scoreText.text = score.ToString("D6");
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -49,12 +55,6 @@ public class GameManager : MonoBehaviour
                 Time.timeScale = 1f;
             }
         }
-    }
-
-    private void Start()
-    {
-        lifeText.text = life.ToString("D2");
-        scoreText.text = score.ToString("D6");
     }
 
     public void Damaged(float damage)
@@ -93,6 +93,7 @@ public class GameManager : MonoBehaviour
 
     public void ExitGameOnPlaying()
     {
+        Time.timeScale = 1f;
         Destroy(gameObject);
         SceneManager.LoadScene(0);
     }
